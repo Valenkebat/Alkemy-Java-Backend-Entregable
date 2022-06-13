@@ -14,8 +14,9 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Entity
 @Table(name = "personaje")
@@ -31,15 +32,8 @@ public class PesonajeEntity {
     private double peso;
     private String historia;
 
-    @ManyToMany(
-            cascade = {
-                    CascadeType.PERSIST,
-                    CascadeType.MERGE
-            })
-    @JoinTable(
-            name= "personaje_pelicula",
-            joinColumns = @JoinColumn(name = "pelicula_id",referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "personaje_id",referencedColumnName = "id"))
-    private Set<PeliculaEntity> peliculas = new HashSet<>();
+    @ManyToMany(mappedBy = "personajes", cascade = CascadeType.ALL)
+    private List<PeliculaEntity> peliculas = new ArrayList<>();
+
 
 }
